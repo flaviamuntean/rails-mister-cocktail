@@ -1,0 +1,27 @@
+<h1> Add a dose for <%= @cocktail.name %> </h1>
+
+<%= simple_form_for [@cocktail, @dose] do |f| %>
+  <%= f.error_notification %>
+
+  <% if @dose.errors.any? %>
+    <div class="alert alert-danger">
+      <h3>Please fix these problems:</h3>
+      <ul>
+      <% @dose.errors.full_messages.each do |error| %>
+        <li><%= error %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-inputs">
+    <%= f.association :ingredient, collection: Ingredient.order('name ASC') %>
+    <%= f.input :description %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, class: 'btn btn-primary mb-3' %>
+  </div>
+<% end %>
+
+<%= link_to "Go back to cocktail", cocktail_path(@cocktail), class: "btn btn-light btn-sm"%>
